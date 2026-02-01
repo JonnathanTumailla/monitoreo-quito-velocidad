@@ -1,0 +1,52 @@
+services:
+  db:
+    image: postgres:16
+    container_name: quito_db
+    restart: always
+    env_file: .env
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - quito_net
+
+  pgadmin:
+    image: dpage/pgadmin4:8
+    container_name: quito_pgadmin
+    restart: always
+    env_file: .env
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+    ports:
+      - "${PGADMIN_PORT}:80"
+    depends_on:
+      - db
+    networks:
+      - quito_net
+
+  api:
+    build: ./backend
+    container_name: quito_api
+    restart: always
+    env_file: .env
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+    ports:
+      - "${API_PORT}:8000"
+    depends_on:
+      - db
+    networks:
+      - quito_net
+
+volumes:
+  db_data:
+
+networks:
+  quito_net:
+    driver: bridge

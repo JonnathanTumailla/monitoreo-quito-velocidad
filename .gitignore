@@ -1,0 +1,28 @@
+# --- secrets ---
+.env
+
+# --- python ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+
+# --- node/react ---
+node_modules/
+dist/
+build/
+.vite/
+
+# --- flutter ---
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+ios/Pods/
+android/.gradle/
+
+# --- OS ---
+.DS_Store
+Thumbs.db
