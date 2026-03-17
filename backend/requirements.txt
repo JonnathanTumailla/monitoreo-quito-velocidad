@@ -1,2 +1,6 @@
 fastapi==0.115.0
 uvicorn[standard]==0.30.6
+sqlalchemy==2.0.30
+psycopg2-binary==2.9.9    # Conector para Postgres
+geoalchemy2==0.14.7       # Para que Python entienda PostGIS
+python-dotenv==1.0.1
